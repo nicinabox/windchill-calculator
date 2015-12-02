@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --port 8081 --content-base public/ --inline --hot"
+    "start": "webpack-dev-server --port 8081 --content-base public/ --inline --hot",
+    "deploy": "sh deploy.sh"
   },
   "keywords": [],
   "author": "Nic Aitch <nic@nicinabox.com> (nicinabox.com)",
