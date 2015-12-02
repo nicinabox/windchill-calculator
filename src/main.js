@@ -56,8 +56,8 @@ class App extends React.Component {
 
     return jsonp(url, (err, resp) => {
       this.setState({
-        temperature: parseInt(resp.currently.temperature),
-        windSpeed: parseInt(resp.currently.windSpeed),
+        temperature: this.state.temperature || parseInt(resp.currently.temperature),
+        windSpeed: this.state.windSpeed || parseInt(resp.currently.windSpeed),
         status: status.ready
       })
     })
@@ -75,7 +75,7 @@ class App extends React.Component {
         <div className="pure-u-1">
           <p>
             <small style={styles.textMuted}>
-              {this.state.status || ' '}
+              {this.state.status}
             </small>
           </p>
         </div>
