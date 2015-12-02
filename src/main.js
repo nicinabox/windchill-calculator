@@ -3,8 +3,6 @@ import React from 'react'
 import jsonp from 'jsonp'
 import {windchill} from 'weather-tools'
 
-const {FORECAST_API_KEY} = process.env
-
 class App extends React.Component {
   constructor(props) {
     super(props)

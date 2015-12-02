@@ -1,6 +1,6 @@
 #!/bin/bash
 
-webpack -p
+PRERELEASE=false webpack -p
 
 rm -rf dist
 mkdir -p dist
