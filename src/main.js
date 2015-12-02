@@ -1,8 +1,13 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
 import jsonp from 'jsonp'
-import axios from 'axios'
 import {windchill} from 'weather-tools'
+
+var status = {
+  location: 'Getting your location...',
+  forecast: 'Getting your forecast...',
+  ready: ''
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -11,6 +16,8 @@ class App extends React.Component {
     this.state = {
       temperature: null,
       windSpeed: null,
+      location: null,
+      status: status.location
     }
   }
 
@@ -29,7 +36,8 @@ class App extends React.Component {
   _getLocation() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this._getForecast(position.coords);
+        this.setState({ status: status.forecast })
+        this._getForecast(position.coords)
       })
     } else {
       console.warn('geolocation not supported')
@@ -40,10 +48,11 @@ class App extends React.Component {
     var { latitude, longitude } = coords
     var url = `https://api.forecast.io/forecast/${FORECAST_API_KEY}/${[latitude, longitude].join(',')}`
 
-    return axios.get(url).then((resp) => {
+    return jsonp(url, (err, resp) => {
       this.setState({
         temperature: parseInt(resp.currently.temperature),
-        windSpeed: parseInt(resp.currently.windSpeed)
+        windSpeed: parseInt(resp.currently.windSpeed),
+        status: status.ready
       })
     })
   }
@@ -57,6 +66,16 @@ class App extends React.Component {
 
     return (
       <div className="pure-g">
+        {__PRERELEASE__ && (
+          <div className="pure-u-1">
+            <p>
+              <small style={styles.textMuted}>
+                {this.state.status || ' '}
+              </small>
+            </p>
+          </div>
+        )}
+
         <form className="pure-form pure-u-1">
           <div className="pure-group">
             <input type="number"
@@ -93,6 +112,9 @@ var styles = {
     textAlign: 'center',
     display: 'block',
     margin: '30px 0',
+  },
+  textMuted: {
+    color: '#aaa'
   }
 }
 
