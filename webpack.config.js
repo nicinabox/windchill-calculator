@@ -1,3 +1,5 @@
+var webpack = require('webpack')
+
 module.exports = {
   entry: './src/main.js',
   output: {
@@ -12,5 +14,12 @@ module.exports = {
         loader: 'babel'
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'FORECAST_API_KEY': JSON.stringify(process.env.FORECAST_API_KEY),
+      }
+    })
+  ]
 }
