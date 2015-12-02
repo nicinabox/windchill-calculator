@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
 import jsonp from 'jsonp'
+import axios from 'axios'
 import {windchill} from 'weather-tools'
 
 class App extends React.Component {
@@ -39,7 +40,7 @@ class App extends React.Component {
     var { latitude, longitude } = coords
     var url = `https://api.forecast.io/forecast/${FORECAST_API_KEY}/${[latitude, longitude].join(',')}`
 
-    return jsonp(url, (err, resp) => {
+    return axios.get(url).then((resp) => {
       this.setState({
         temperature: parseInt(resp.currently.temperature),
         windSpeed: parseInt(resp.currently.windSpeed)
