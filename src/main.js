@@ -83,12 +83,14 @@ class App extends React.Component {
               placeholder="Temperature (F)"
               onChange={this._handleTemperatureChange.bind(this)}
               value={this.state.temperature}
+              pattern="[0-9]*"
               autoFocus />
 
             <input type="number"
               className="pure-input-1"
               placeholder="Wind speed (MPH)"
               value={this.state.windSpeed}
+              pattern="[0-9]*"
               onChange={this._handleWindSpeedChange.bind(this)} />
           </div>
         </form>
