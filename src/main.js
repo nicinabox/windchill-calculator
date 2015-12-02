@@ -33,6 +33,12 @@ class App extends React.Component {
     this.setState({ windSpeed: e.currentTarget.value })
   }
 
+  _handleInputFocus(e) {
+    setTimeout(function() {
+      e.target.select()
+    }, 0)
+  }
+
   _getLocation() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -80,6 +86,7 @@ class App extends React.Component {
               className="pure-input-1"
               placeholder="Temperature (F)"
               onChange={this._handleTemperatureChange.bind(this)}
+              onFocus={this._handleInputFocus.bind(this)}
               value={this.state.temperature}
               pattern="[0-9]*"
               autoFocus />
@@ -87,9 +94,10 @@ class App extends React.Component {
             <input type="number"
               className="pure-input-1"
               placeholder="Wind speed (MPH)"
+              onChange={this._handleWindSpeedChange.bind(this)}
+              onFocus={this._handleInputFocus.bind(this)}
               value={this.state.windSpeed}
-              pattern="[0-9]*"
-              onChange={this._handleWindSpeedChange.bind(this)} />
+              pattern="[0-9]*" />
           </div>
         </form>
 
