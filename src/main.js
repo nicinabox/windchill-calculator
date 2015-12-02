@@ -66,15 +66,13 @@ class App extends React.Component {
 
     return (
       <div className="pure-g">
-        {__PRERELEASE__ && (
-          <div className="pure-u-1">
-            <p>
-              <small style={styles.textMuted}>
-                {this.state.status || ' '}
-              </small>
-            </p>
-          </div>
-        )}
+        <div className="pure-u-1">
+          <p>
+            <small style={styles.textMuted}>
+              {this.state.status || ' '}
+            </small>
+          </p>
+        </div>
 
         <form className="pure-form pure-u-1">
           <div className="pure-group">
