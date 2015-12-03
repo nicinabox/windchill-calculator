@@ -41,7 +41,7 @@ input:focus + .inline-label {
 }
 
 .text-muted {
-  color: '#aaa';
+  color: #aaa;
 }
 
 .text-danger {
