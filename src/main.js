@@ -83,6 +83,14 @@ class App extends React.Component {
     }, 0)
   }
 
+  _handleChangeUnit(unit, e) {
+    e.preventDefault()
+    this.setState({
+      unitSystem: unit,
+      unit: UNITS[unit]
+    })
+  }
+
   _getLocation() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -119,63 +127,82 @@ class App extends React.Component {
     var windchillTemp = this._windchill(+temperature, +windSpeed)
 
     return (
-      <div className="pure-g">
-        <div className="pure-u-1">
-          <p className="app-status">
-            {this.state.status && (
-              <small className="text-muted">
-                {this.state.status}
-              </small>
-            )}
+      <div>
+        <div className="pure-g">
+          <div className="pure-u-1-2">
+            <p className="app-status">
+              {this.state.status && (
+                <small className="text-muted">
+                  {this.state.status}
+                </small>
+              )}
 
-            {this.state.error && (
-              <small className="text-danger">
-                {this.state.error}
-              </small>
-            )}
-          </p>
+              {this.state.error && (
+                <small className="text-danger">
+                  {this.state.error}
+                </small>
+              )}
+            </p>
+          </div>
+
+          <div className="pure-u-1-2">
+            <div className="unit-toggle">
+              <a href="#"
+                className={this.state.unitSystem === US_UNITS ? 'active' : ''}
+                onClick={this._handleChangeUnit.bind(this, US_UNITS)}>
+                {US_UNITS}
+              </a>
+              <a href="#"
+                className={this.state.unitSystem === SI_UNITS ? 'active' : ''}
+                onClick={this._handleChangeUnit.bind(this, SI_UNITS)}>
+                {SI_UNITS}
+              </a>
+            </div>
+          </div>
         </div>
 
-        <form className="pure-form pure-u-1">
-          <div className="pure-control-group">
-            <input type="number"
-              className="pure-input-1"
-              placeholder="Temperature"
-              onChange={this._handleTemperatureChange.bind(this)}
-              onFocus={this._handleInputFocus.bind(this)}
-              value={this.state.temperature}
-              pattern="[0-9]*"
-              max="50"
-              autoFocus />
-            <span className="inline-label">{this.state.units.temperature}</span>
-            <p className="help-block">
-              {this.state.bounds.MAX_TEMP}{this.state.units.temperature} max
-            </p>
-          </div>
+        <div className="pure-g">
+          <form className="pure-form pure-u-1">
+            <div className="pure-control-group">
+              <input type="number"
+                className="pure-input-1"
+                placeholder="Temperature"
+                onChange={this._handleTemperatureChange.bind(this)}
+                onFocus={this._handleInputFocus.bind(this)}
+                value={this.state.temperature}
+                pattern="[0-9]*"
+                max="50"
+                autoFocus />
+              <span className="inline-label">{this.state.units.temperature}</span>
+              <p className="help-block">
+                {this.state.bounds.MAX_TEMP}{this.state.units.temperature} max
+              </p>
+            </div>
 
-          <div className="pure-control-group">
-            <input type="number"
-              className="pure-input-1"
-              placeholder="Wind speed"
-              onChange={this._handleWindSpeedChange.bind(this)}
-              onFocus={this._handleInputFocus.bind(this)}
-              value={this.state.windSpeed}
-              min="3"
-              pattern="[0-9]*" />
-            <span className="inline-label">{this.state.units.windSpeed}</span>
-            <p className="help-block">
-              {this.state.bounds.MIN_SPEED}{this.state.units.windSpeed} min
-            </p>
-          </div>
-        </form>
+            <div className="pure-control-group">
+              <input type="number"
+                className="pure-input-1"
+                placeholder="Wind speed"
+                onChange={this._handleWindSpeedChange.bind(this)}
+                onFocus={this._handleInputFocus.bind(this)}
+                value={this.state.windSpeed}
+                min="3"
+                pattern="[0-9]*" />
+              <span className="inline-label">{this.state.units.windSpeed}</span>
+              <p className="help-block">
+                {this.state.bounds.MIN_SPEED}{this.state.units.windSpeed} min
+              </p>
+            </div>
+          </form>
 
-        {windchillTemp && !isNaN(windchillTemp) && (
-          <div className="pure-u-1">
-            <span style={styles.windchill}>
-              Feels like {windchillTemp}{this.state.units.temperature}
-            </span>
-          </div>
-        )}
+          {windchillTemp && !isNaN(windchillTemp) && (
+            <div className="pure-u-1">
+              <span style={styles.windchill}>
+                Feels like {windchillTemp}{this.state.units.temperature}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
     )
   }
