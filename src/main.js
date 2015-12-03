@@ -4,7 +4,6 @@ import jsonp from 'jsonp'
 import { windchill } from 'weather-tools'
 import './styles/main.css'
 
-
 const US_UNITS = 'US'
 const SI_UNITS = 'SI'
 
@@ -110,19 +109,14 @@ class App extends React.Component {
     })
   }
 
-  _isValid(state) {
-    return (
-      +state.temperature < state.bounds.MAX_TEMP &&
-      +state.windSpeed > state.bounds.MIN_SPEED
-    )
+  _windchill(temp, speed) {
+    var system = this.state.unitSystem.toLowerCase()
+    return windchill[system](+temp, +speed)
   }
 
   render() {
     var { temperature, windSpeed } = this.state
-
-    if (this._isValid(this.state)) {
-      var windchillTemp = windchill[this.state.units.toLowerCase()](+temperature, +windSpeed)
-    }
+    var windchillTemp = this._windchill(+temperature, +windSpeed)
 
     return (
       <div className="pure-g">
