@@ -1,8 +1,12 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
 import jsonp from 'jsonp'
-import {windchill} from 'weather-tools'
+import { windchill } from 'weather-tools'
 import './styles/main.css'
+
+
+const US_UNITS = 'US'
+const SI_UNITS = 'SI'
 
 var status = {
   location: 'Getting your location...',
@@ -18,6 +22,7 @@ class App extends React.Component {
       temperature: null,
       windSpeed: null,
       location: null,
+      units: US_UNITS,
       status: status.location
     }
   }
@@ -57,7 +62,9 @@ class App extends React.Component {
         this._getForecast(position.coords)
       })
     } else {
-      console.warn('geolocation not supported')
+      this.setState({
+        status: 'Location not supported'
+      })
     }
   }
 
@@ -75,18 +82,28 @@ class App extends React.Component {
   }
 
   _isValid(state) {
-    if (+state.temperature <= 50 && +state.windSpeed >= 3) {
-      return true
+    var MAX_TEMP, MIN_SPEED
+    var { bounds } = windchill
+
+    if (this.state.units === US_UNITS) {
+      MAX_TEMP = bounds.US_TEMP_MAX
+      MIN_SPEED = bounds.US_SPEED_MIN
+    } else {
+      MAX_TEMP = bounds.SI_TEMP_MAX
+      MIN_SPEED = bounds.SI_SPEED_MIN
     }
 
-    return false
+    return (
+      +state.temperature > MAX_TEMP &&
+      +state.windSpeed < MIN_SPEED
+    )
   }
 
   render() {
     var { temperature, windSpeed } = this.state
 
     if (this._isValid(this.state)) {
-      var windchillTemp = windchill(+temperature, +windSpeed)
+      var windchillTemp = windchill[this.state.units.toLowerCase()](+temperature, +windSpeed)
     }
 
     return (

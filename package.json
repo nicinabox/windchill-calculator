@@ -16,7 +16,7 @@
     "jsonp": "^0.2.0",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
-    "weather-tools": "^1.0.0"
+    "weather-tools": "^2.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.1.2",
