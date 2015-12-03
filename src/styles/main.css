@@ -2,6 +2,11 @@ body {
   padding: 15px;
 }
 
+html, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
+  font-family: Lato, Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
 .pure-control-group {
   margin-bottom: 15px;
   position: relative;
