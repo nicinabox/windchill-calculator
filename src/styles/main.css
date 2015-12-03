@@ -1,0 +1,49 @@
+body {
+  padding: 15px;
+}
+
+.pure-control-group {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+#app {
+  max-width: 400px;
+  margin: 50px auto;
+}
+
+.app-status {
+  small {
+    display: block
+  }
+}
+
+.inline-label {
+  color: #fff;
+  font-size: 80%;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: #bbb;
+  display: inline-block;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+}
+
+input:focus + .inline-label {
+  background: #42b8dd;
+}
+
+.help-block {
+  margin: 5px 0 0 0;
+  color: #aaa;
+  font-size: 80%;
+}
+
+.text-muted {
+  color: '#aaa';
+}
+
+.text-danger {
+  color: #ca3c3c;
+}

@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom'
 import React from 'react'
 import jsonp from 'jsonp'
 import {windchill} from 'weather-tools'
+import './styles/main.css'
 
 var status = {
   location: 'Getting your location...',
