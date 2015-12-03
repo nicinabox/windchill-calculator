@@ -12,7 +12,17 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
         loader: 'babel'
+      },
+      {
+        test:   /\.css$/,
+        loaders: ['style', 'css', 'postcss']
       }
+    ]
+  },
+  postcss: function() {
+    return [
+      require('autoprefixer'),
+      require('precss')
     ]
   },
   plugins: [

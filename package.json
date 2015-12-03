@@ -19,11 +19,14 @@
     "weather-tools": "^1.0.0"
   },
   "devDependencies": {
+    "autoprefixer": "^6.1.2",
     "babel": "^6.1.18",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
     "babel-preset-stage-2": "^6.1.18",
+    "postcss": "^5.0.12",
+    "precss": "^1.3.0",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
   },
