@@ -94,7 +94,7 @@ class App extends React.Component {
         <div className="pure-u-1">
           <p className="app-status">
             {this.state.status && (
-              <small class="text-muted">
+              <small className="text-muted">
                 {this.state.status}
               </small>
             )}
