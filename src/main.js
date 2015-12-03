@@ -27,11 +27,21 @@ class App extends React.Component {
   }
 
   _handleTemperatureChange(e) {
-    this.setState({ temperature: e.currentTarget.value })
+    var { value } = e.currentTarget
+
+    this.setState({
+      temperature: value,
+      error: (value && value > 50) ? 'Temperature must be at most 50F' : ''
+    })
   }
 
   _handleWindSpeedChange(e) {
-    this.setState({ windSpeed: e.currentTarget.value })
+    var { value } = e.currentTarget
+
+    this.setState({
+      windSpeed: value,
+      error: (value && value < 3) ? 'Wind speed must be at least 3MPH' : ''
+    })
   }
 
   _handleInputFocus(e) {
@@ -64,45 +74,73 @@ class App extends React.Component {
     })
   }
 
+  _isValid(state) {
+    if (+state.temperature <= 50 && +state.windSpeed >= 3) {
+      return true
+    }
+
+    return false
+  }
+
   render() {
-    var windchillTemp;
     var { temperature, windSpeed } = this.state
-    if (temperature != null && windSpeed != null) {
-      windchillTemp = windchill(temperature, windSpeed)
+
+    if (this._isValid(this.state)) {
+      var windchillTemp = windchill(+temperature, +windSpeed)
     }
 
     return (
       <div className="pure-g">
         <div className="pure-u-1">
-          <p>
-            <small style={styles.textMuted}>
-              {this.state.status}
-            </small>
+          <p className="app-status">
+            {this.state.status && (
+              <small class="text-muted">
+                {this.state.status}
+              </small>
+            )}
+
+            {this.state.error && (
+              <small className="text-danger">
+                {this.state.error}
+              </small>
+            )}
           </p>
         </div>
 
         <form className="pure-form pure-u-1">
-          <div className="pure-group">
+          <div className="pure-control-group">
             <input type="number"
               className="pure-input-1"
-              placeholder="Temperature (F)"
+              placeholder="Temperature"
               onChange={this._handleTemperatureChange.bind(this)}
               onFocus={this._handleInputFocus.bind(this)}
               value={this.state.temperature}
               pattern="[0-9]*"
+              max="50"
               autoFocus />
+            <span className="inline-label">F</span>
+            <p className="help-block">
+              50F max
+            </p>
+          </div>
 
+          <div className="pure-control-group">
             <input type="number"
               className="pure-input-1"
-              placeholder="Wind speed (MPH)"
+              placeholder="Wind speed"
               onChange={this._handleWindSpeedChange.bind(this)}
               onFocus={this._handleInputFocus.bind(this)}
               value={this.state.windSpeed}
+              min="3"
               pattern="[0-9]*" />
+            <span className="inline-label">MPH</span>
+            <p className="help-block">
+              3MPH min
+            </p>
           </div>
         </form>
 
-        {!isNaN(windchillTemp) && (
+        {windchillTemp && !isNaN(windchillTemp) && (
           <div className="pure-u-1">
             <span style={styles.windchill}>
               Feels like {windchillTemp}F
@@ -122,9 +160,6 @@ var styles = {
     display: 'block',
     margin: '30px 0',
   },
-  textMuted: {
-    color: '#aaa'
-  }
 }
 
 ReactDOM.render(<App />, document.getElementById('app'))
