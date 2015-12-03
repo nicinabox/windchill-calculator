@@ -8,10 +8,37 @@ import './styles/main.css'
 const US_UNITS = 'US'
 const SI_UNITS = 'SI'
 
+const UNITS = {
+  SI: {
+    temperature: 'C',
+    windSpeed: 'KPH'
+  },
+  US: {
+    temperature: 'F',
+    windSpeed: 'MPH'
+  }
+}
+
 var status = {
   location: 'Getting your location...',
   forecast: 'Getting your forecast...',
   ready: ''
+}
+
+var getBounds = (units) => {
+  var MAX_TEMP, MIN_SPEED, { bounds } = windchill
+
+  if (units === US_UNITS) {
+    MAX_TEMP = bounds.US_TEMP_MAX
+    MIN_SPEED = bounds.US_SPEED_MIN
+  } else {
+    MAX_TEMP = bounds.SI_TEMP_MAX
+    MIN_SPEED = bounds.SI_SPEED_MIN
+  }
+
+  return {
+    MAX_TEMP, MIN_SPEED
+  }
 }
 
 class App extends React.Component {
@@ -22,7 +49,9 @@ class App extends React.Component {
       temperature: null,
       windSpeed: null,
       location: null,
-      units: US_UNITS,
+      unitSystem: US_UNITS,
+      units: UNITS[US_UNITS],
+      bounds: getBounds(US_UNITS),
       status: status.location
     }
   }
@@ -82,20 +111,9 @@ class App extends React.Component {
   }
 
   _isValid(state) {
-    var MAX_TEMP, MIN_SPEED
-    var { bounds } = windchill
-
-    if (this.state.units === US_UNITS) {
-      MAX_TEMP = bounds.US_TEMP_MAX
-      MIN_SPEED = bounds.US_SPEED_MIN
-    } else {
-      MAX_TEMP = bounds.SI_TEMP_MAX
-      MIN_SPEED = bounds.SI_SPEED_MIN
-    }
-
     return (
-      +state.temperature > MAX_TEMP &&
-      +state.windSpeed < MIN_SPEED
+      +state.temperature < state.bounds.MAX_TEMP &&
+      +state.windSpeed > state.bounds.MIN_SPEED
     )
   }
 
@@ -135,9 +153,9 @@ class App extends React.Component {
               pattern="[0-9]*"
               max="50"
               autoFocus />
-            <span className="inline-label">F</span>
+            <span className="inline-label">{this.state.units.temperature}</span>
             <p className="help-block">
-              50F max
+              {this.state.bounds.MAX_TEMP}{this.state.units.temperature} max
             </p>
           </div>
 
@@ -150,9 +168,9 @@ class App extends React.Component {
               value={this.state.windSpeed}
               min="3"
               pattern="[0-9]*" />
-            <span className="inline-label">MPH</span>
+            <span className="inline-label">{this.state.units.windSpeed}</span>
             <p className="help-block">
-              3MPH min
+              {this.state.bounds.MIN_SPEED}{this.state.units.windSpeed} min
             </p>
           </div>
         </form>
@@ -160,7 +178,7 @@ class App extends React.Component {
         {windchillTemp && !isNaN(windchillTemp) && (
           <div className="pure-u-1">
             <span style={styles.windchill}>
-              Feels like {windchillTemp}F
+              Feels like {windchillTemp}{this.state.units.temperature}
             </span>
           </div>
         )}
