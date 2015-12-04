@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source .env
+
 PRERELEASE=false webpack -p
 
 rm -rf dist

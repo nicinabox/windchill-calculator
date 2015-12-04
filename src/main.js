@@ -6,8 +6,6 @@ import convertTemp from './convertTemp'
 import convertSpeed from './convertSpeed'
 import './styles/main.css'
 
-const { FORECAST_API_KEY } = process.env
-
 const US_UNITS = 'US'
 const SI_UNITS = 'SI'
 
