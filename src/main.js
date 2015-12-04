@@ -28,6 +28,8 @@ var status = {
   ready: ''
 }
 
+var isNumber = (n) => typeof n === 'number'
+
 var getBounds = (units) => {
   var MAX_TEMP, MIN_SPEED, { bounds } = windchill
 
@@ -77,12 +79,6 @@ class App extends React.Component {
     this.setState({
       windSpeed: value
     })
-  }
-
-  _handleInputFocus(e) {
-    setTimeout(function() {
-      e.target.select()
-    }, 0)
   }
 
   _handleChangeUnit(newUnit, e) {
@@ -138,7 +134,7 @@ class App extends React.Component {
 
   render() {
     var { temperature, windSpeed } = this.state
-    var windchillTemp = this._windchill(+temperature, +windSpeed)
+    var windchillTemp = this._windchill(temperature, windSpeed)
 
     return (
       <div>
@@ -182,7 +178,6 @@ class App extends React.Component {
                 className="pure-input-1"
                 placeholder="Temperature"
                 onChange={this._handleTemperatureChange.bind(this)}
-                onFocus={this._handleInputFocus.bind(this)}
                 value={this.state.temperature}
                 pattern="[0-9]*"
                 max={this.state.bounds.MAX_TEMP}
@@ -198,7 +193,6 @@ class App extends React.Component {
                 className="pure-input-1"
                 placeholder="Wind speed"
                 onChange={this._handleWindSpeedChange.bind(this)}
-                onFocus={this._handleInputFocus.bind(this)}
                 value={this.state.windSpeed}
                 min={this.state.bounds.MIN_SPEED}
                 step="any"
@@ -210,7 +204,7 @@ class App extends React.Component {
             </div>
           </form>
 
-          {windchillTemp && !isNaN(windchillTemp) && (
+          {isNumber(windchillTemp) && (
             <div className="pure-u-1">
               <span style={styles.windchill}>
                 Feels like {windchillTemp}{this.state.units.temperature}
