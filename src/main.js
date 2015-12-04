@@ -188,6 +188,7 @@ class App extends React.Component {
                 onChange={this._handleTemperatureChange.bind(this)}
                 value={this.state.temperature}
                 pattern="[0-9]*"
+                step="any"
                 max={this.state.bounds.MAX_TEMP}
                 autoFocus />
               <span className="inline-label">{this.state.units.temperature}</span>
