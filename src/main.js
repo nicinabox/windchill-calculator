@@ -12,11 +12,11 @@ const SI_UNITS = 'SI'
 const UNITS = {
   SI: {
     temperature: 'C',
-    windSpeed: 'KPH'
+    speed: 'KPH'
   },
   US: {
     temperature: 'F',
-    windSpeed: 'MPH'
+    speed: 'MPH'
   }
 }
 
@@ -50,7 +50,7 @@ class App extends React.Component {
 
     this.state = {
       temperature: null,
-      windSpeed: null,
+      speed: null,
       location: null,
       unitSystem: US_UNITS,
       units: UNITS[US_UNITS],
@@ -75,7 +75,7 @@ class App extends React.Component {
     var { value } = e.currentTarget
 
     this.setState({
-      windSpeed: value
+      speed: value
     })
   }
 
@@ -88,7 +88,7 @@ class App extends React.Component {
       units: UNITS[newUnit],
       bounds: getBounds(newUnit),
       temperature: convertTemp(this.state.temperature, this.state.unitSystem),
-      windSpeed: convertSpeed(this.state.windSpeed, this.state.unitSystem),
+      speed: convertSpeed(this.state.speed, this.state.unitSystem),
     })
   }
 
@@ -131,8 +131,8 @@ class App extends React.Component {
   }
 
   render() {
-    var { temperature, windSpeed } = this.state
-    var windchillTemp = this._windchill(temperature, windSpeed)
+    var { temperature, speed } = this.state
+    var windchillTemp = this._windchill(temperature, speed)
 
     return (
       <div>
@@ -191,13 +191,13 @@ class App extends React.Component {
                 className="pure-input-1"
                 placeholder="Wind speed"
                 onChange={this._handleWindSpeedChange.bind(this)}
-                value={this.state.windSpeed}
+                value={this.state.speed}
                 min={this.state.bounds.MIN_SPEED}
                 step="any"
                 pattern="[0-9]*" />
-              <span className="inline-label">{this.state.units.windSpeed}</span>
+              <span className="inline-label">{this.state.units.speed}</span>
               <p className="help-block">
-                {this.state.bounds.MIN_SPEED}{this.state.units.windSpeed} min
+                {this.state.bounds.MIN_SPEED}{this.state.units.speed} min
               </p>
             </div>
           </form>
