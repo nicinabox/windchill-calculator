@@ -1,7 +1,3 @@
-body {
-  padding: 15px;
-}
-
 html, button, input, select, textarea,
 .pure-g [class *= "pure-u"] {
   font-family: Lato, Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -14,7 +10,8 @@ html, button, input, select, textarea,
 
 #app {
   max-width: 400px;
-  margin: 50px auto;
+  margin: 20px auto;
+  padding: 15px
 }
 
 .app-status {
@@ -51,4 +48,28 @@ input:focus + .inline-label {
 
 .text-danger {
   color: #ca3c3c;
+}
+
+.pull-right {
+  float: right;
+}
+
+.unit-toggle {
+  border: 1px solid #42b8dd;
+  border-radius: 3px;
+  margin: 10px 0;
+
+  a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 2px 5px;
+    color: #42b8dd;
+    min-width: 20px;
+    text-align: center;
+
+    &.active {
+      background: #42b8dd;
+      color: #fff;
+    }
+  }
 }

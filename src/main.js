@@ -2,6 +2,8 @@ import ReactDOM from 'react-dom'
 import React from 'react'
 import jsonp from 'jsonp'
 import { windchill } from 'weather-tools'
+import convertTemp from './convertTemp'
+import convertSpeed from './convertSpeed'
 import './styles/main.css'
 
 const US_UNITS = 'US'
@@ -63,8 +65,7 @@ class App extends React.Component {
     var { value } = e.currentTarget
 
     this.setState({
-      temperature: value,
-      error: (value && value > 50) ? 'Temperature must be at most 50F' : ''
+      temperature: value
     })
   }
 
@@ -72,8 +73,7 @@ class App extends React.Component {
     var { value } = e.currentTarget
 
     this.setState({
-      windSpeed: value,
-      error: (value && value < 3) ? 'Wind speed must be at least 3MPH' : ''
+      windSpeed: value
     })
   }
 
@@ -83,11 +83,16 @@ class App extends React.Component {
     }, 0)
   }
 
-  _handleChangeUnit(unit, e) {
+  _handleChangeUnit(newUnit, e) {
     e.preventDefault()
+    if (this.state.unitSystem === newUnit) return
+
     this.setState({
-      unitSystem: unit,
-      unit: UNITS[unit]
+      unitSystem: newUnit,
+      units: UNITS[newUnit],
+      bounds: getBounds(newUnit),
+      temperature: convertTemp(this.state.temperature, this.state.unitSystem),
+      windSpeed: convertSpeed(this.state.windSpeed, this.state.unitSystem),
     })
   }
 
@@ -129,7 +134,7 @@ class App extends React.Component {
     return (
       <div>
         <div className="pure-g">
-          <div className="pure-u-1-2">
+          <div className="pure-u-2-3">
             <p className="app-status">
               {this.state.status && (
                 <small className="text-muted">
@@ -145,8 +150,8 @@ class App extends React.Component {
             </p>
           </div>
 
-          <div className="pure-u-1-2">
-            <div className="unit-toggle">
+          <div className="pure-u-1-3">
+            <div className="unit-toggle pull-right">
               <a href="#"
                 className={this.state.unitSystem === US_UNITS ? 'active' : ''}
                 onClick={this._handleChangeUnit.bind(this, US_UNITS)}>
@@ -171,7 +176,7 @@ class App extends React.Component {
                 onFocus={this._handleInputFocus.bind(this)}
                 value={this.state.temperature}
                 pattern="[0-9]*"
-                max="50"
+                max={this.state.bounds.MAX_TEMP}
                 autoFocus />
               <span className="inline-label">{this.state.units.temperature}</span>
               <p className="help-block">
@@ -186,7 +191,8 @@ class App extends React.Component {
                 onChange={this._handleWindSpeedChange.bind(this)}
                 onFocus={this._handleInputFocus.bind(this)}
                 value={this.state.windSpeed}
-                min="3"
+                min={this.state.bounds.MIN_SPEED}
+                step="any"
                 pattern="[0-9]*" />
               <span className="inline-label">{this.state.units.windSpeed}</span>
               <p className="help-block">
