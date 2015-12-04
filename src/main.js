@@ -119,9 +119,17 @@ class App extends React.Component {
         return
       }
 
+      var currentTemp = parseInt(resp.currently.temperature)
+      var currentSpeed = parseInt(resp.currently.windSpeed)
+
+      if (this.state.unitSystem === SI_UNITS) {
+        currentTemp = convertTemp(currentTemp, US_UNITS)
+        currentSpeed = convertSpeed(currentSpeed, US_UNITS)
+      }
+
       this.setState({
-        temperature: this.state.temperature || parseInt(resp.currently.temperature),
-        windSpeed: this.state.windSpeed || parseInt(resp.currently.windSpeed),
+        temperature: this.state.temperature || currentTemp,
+        speed: this.state.speed || currentSpeed,
         status: status.ready
       })
     })
