@@ -73,3 +73,15 @@ input:focus + .inline-label {
     }
   }
 }
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  color: #aaa;
+  margin: 10px 15px;
+  font-size: 80%;
+
+  a {
+    color: #42b8dd;
+  }
+}
