@@ -1,0 +1,18 @@
+html, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
+  font-family: $font-family;
+}
+
+.help-block {
+  margin: 5px 0 0 0;
+  color: $gray-light;
+  font-size: 80%;
+}
+
+.text-muted {
+  color: $gray-light;
+}
+
+.text-danger {
+  color: $brand-danger;
+}

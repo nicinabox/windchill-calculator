@@ -1,4 +1,5 @@
 var webpack = require('webpack')
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 module.exports = {
   entry: './src/main.js',
@@ -15,7 +16,7 @@ module.exports = {
       },
       {
         test:   /\.css$/,
-        loaders: ['style', 'css', 'postcss']
+        loader: ExtractTextPlugin.extract('style', 'css!postcss')
       }
     ]
   },
@@ -30,6 +31,7 @@ module.exports = {
       'FORECAST_API_KEY': JSON.stringify(process.env.FORECAST_API_KEY),
       'GOOGLE_API_KEY': JSON.stringify(process.env.GOOGLE_API_KEY),
       '__PRERELEASE__': JSON.stringify(JSON.parse(process.env.PRERELEASE || 'true')),
-    })
+    }),
+    new ExtractTextPlugin('main.css')
   ]
 }

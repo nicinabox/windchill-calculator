@@ -1,12 +1,7 @@
-html, button, input, select, textarea,
-.pure-g [class *= "pure-u"] {
-  font-family: Lato, Helvetica Neue, Helvetica, Arial, sans-serif;
-}
-
-.pure-control-group {
-  margin-bottom: 15px;
-  position: relative;
-}
+@import 'variables';
+@import 'layout-helpers';
+@import 'text';
+@import 'forms';
 
 #app {
   max-width: 400px;
@@ -20,42 +15,8 @@ html, button, input, select, textarea,
   }
 }
 
-.inline-label {
-  color: #fff;
-  font-size: 80%;
-  padding: 2px 5px;
-  border-radius: 3px;
-  background: #bbb;
-  display: inline-block;
-  position: absolute;
-  top: 8px;
-  right: 10px;
-}
-
-input:focus + .inline-label {
-  background: #42b8dd;
-}
-
-.help-block {
-  margin: 5px 0 0 0;
-  color: #aaa;
-  font-size: 80%;
-}
-
-.text-muted {
-  color: #aaa;
-}
-
-.text-danger {
-  color: #ca3c3c;
-}
-
-.pull-right {
-  float: right;
-}
-
 .unit-toggle {
-  border: 1px solid #42b8dd;
+  border: 1px solid $brand-primary;
   border-radius: 3px;
   margin: 10px 0;
 
@@ -63,12 +24,12 @@ input:focus + .inline-label {
     display: inline-block;
     text-decoration: none;
     padding: 2px 5px;
-    color: #42b8dd;
+    color: $brand-primary;
     min-width: 20px;
     text-align: center;
 
     &.active {
-      background: #42b8dd;
+      background: $brand-primary;
       color: #fff;
     }
   }
@@ -77,11 +38,11 @@ input:focus + .inline-label {
 #footer {
   position: absolute;
   bottom: 0;
-  color: #aaa;
+  color: $gray-light;
   margin: 10px 15px;
   font-size: 80%;
 
   a {
-    color: #42b8dd;
+    color: $brand-primary;
   }
 }

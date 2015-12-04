@@ -1,0 +1,20 @@
+.pure-control-group {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.inline-label {
+  color: #fff;
+  font-size: 80%;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: #bbb;
+  display: inline-block;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+}
+
+input:focus + .inline-label {
+  background: $brand-primary;
+}
