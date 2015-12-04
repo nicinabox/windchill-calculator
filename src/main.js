@@ -52,7 +52,7 @@ class App extends React.Component {
       temperature: null,
       speed: null,
       location: null,
-      unitSystem: US_UNITS,
+      unitSystem: localStorage.getItem('unit-system') || US_UNITS,
       units: UNITS[US_UNITS],
       bounds: getBounds(US_UNITS),
       status: status.location
@@ -82,6 +82,8 @@ class App extends React.Component {
   _handleChangeUnit(newUnit, e) {
     e.preventDefault()
     if (this.state.unitSystem === newUnit) return
+
+    localStorage.setItem('unit-system', newUnit)
 
     this.setState({
       unitSystem: newUnit,
