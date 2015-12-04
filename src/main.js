@@ -6,6 +6,8 @@ import convertTemp from './convertTemp'
 import convertSpeed from './convertSpeed'
 import './styles/main.css'
 
+const { FORECAST_API_KEY } = process.env
+
 const US_UNITS = 'US'
 const SI_UNITS = 'SI'
 
@@ -114,6 +116,13 @@ class App extends React.Component {
     var url = `https://api.forecast.io/forecast/${FORECAST_API_KEY}/${[latitude, longitude].join(',')}`
 
     return jsonp(url, (err, resp) => {
+      if (err) {
+        this.setState({
+          status: err
+        })
+        return
+      }
+
       this.setState({
         temperature: this.state.temperature || parseInt(resp.currently.temperature),
         windSpeed: this.state.windSpeed || parseInt(resp.currently.windSpeed),

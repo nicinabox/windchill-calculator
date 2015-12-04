@@ -27,8 +27,10 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'FORECAST_API_KEY': JSON.stringify(process.env.FORECAST_API_KEY),
-      'GOOGLE_API_KEY': JSON.stringify(process.env.GOOGLE_API_KEY),
+      'process.env': {
+        'FORECAST_API_KEY': JSON.stringify(process.env.FORECAST_API_KEY),
+        'GOOGLE_API_KEY': JSON.stringify(process.env.GOOGLE_API_KEY),
+      },
       '__PRERELEASE__': JSON.stringify(JSON.parse(process.env.PRERELEASE || 'true')),
     })
   ]
