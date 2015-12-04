@@ -214,7 +214,7 @@ class App extends React.Component {
 
           {isNumber(windchillTemp) && (
             <div className="pure-u-1">
-              <span style={styles.windchill}>
+              <span className='windchill'>
                 Feels like {windchillTemp}{this.state.units.temperature}
               </span>
             </div>
@@ -223,16 +223,6 @@ class App extends React.Component {
       </div>
     )
   }
-}
-
-var styles = {
-  windchill: {
-    fontSize: 26,
-    fontWeight: 300,
-    textAlign: 'center',
-    display: 'block',
-    margin: '30px 0',
-  },
 }
 
 ReactDOM.render(<App />, document.getElementById('app'))

@@ -35,6 +35,14 @@
   }
 }
 
+.windchill {
+  font-size: 26px;
+  font-weight: 300;
+  text-align: center;
+  display: block;
+  margin: 30px 0;
+}
+
 #footer {
   position: absolute;
   bottom: 0;
