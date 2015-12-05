@@ -137,7 +137,12 @@ export default class App extends React.Component {
 
   _windchill(temp, speed) {
     var system = this.state.unitSystem.toLowerCase()
-    return windchill[system](+temp, +speed)
+
+    if (+temp > this.state.bounds.MAX_TEMP || +speed < this.state.bounds.MIN_SPEED) {
+      return temp
+    } else {
+      return windchill[system](+temp, +speed)
+    }
   }
 
   render() {
@@ -189,7 +194,6 @@ export default class App extends React.Component {
                 value={this.state.temperature}
                 pattern="[0-9]*"
                 step="any"
-                max={this.state.bounds.MAX_TEMP}
                 autoFocus />
               <span className="inline-label">{this.state.units.temperature}</span>
               <p className="help-block">
@@ -203,7 +207,6 @@ export default class App extends React.Component {
                 placeholder="Wind speed"
                 onChange={this._handleWindSpeedChange.bind(this)}
                 value={this.state.speed}
-                min={this.state.bounds.MIN_SPEED}
                 step="any"
                 pattern="[0-9]*" />
               <span className="inline-label">{this.state.units.speed}</span>
