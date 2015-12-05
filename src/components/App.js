@@ -188,6 +188,7 @@ export default class App extends React.Component {
           <form className="pure-form pure-u-1">
             <div className="pure-control-group">
               <input type="number"
+                id="temperature"
                 className="pure-input-1"
                 placeholder="Temperature"
                 onChange={this._handleTemperatureChange.bind(this)}
@@ -195,7 +196,10 @@ export default class App extends React.Component {
                 pattern="[0-9]*"
                 step="any"
                 autoFocus />
-              <span className="inline-label">{this.state.units.temperature}</span>
+              <label htmlFor="temperature" className="inline-label">
+                {this.state.units.temperature}
+              </label>
+
               <p className="help-block">
                 {this.state.bounds.MAX_TEMP}{this.state.units.temperature} max
               </p>
@@ -203,13 +207,17 @@ export default class App extends React.Component {
 
             <div className="pure-control-group">
               <input type="number"
+                id="wind-speed"
                 className="pure-input-1"
                 placeholder="Wind speed"
                 onChange={this._handleWindSpeedChange.bind(this)}
                 value={this.state.speed}
                 step="any"
                 pattern="[0-9]*" />
-              <span className="inline-label">{this.state.units.speed}</span>
+              <label htmlFor="wind-speed" className="inline-label">
+                {this.state.units.speed}
+              </label>
+
               <p className="help-block">
                 {this.state.bounds.MIN_SPEED}{this.state.units.speed} min
               </p>
